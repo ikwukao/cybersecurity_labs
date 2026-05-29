@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pymodbus.client import ModbusTcpClient
 
-client = ModbusTcpClient('plc', port=502)
+client = ModbusTcpClient("plc", port=502)
 client.connect()
 
 # Restore Christmas - Write 1 to register 40005

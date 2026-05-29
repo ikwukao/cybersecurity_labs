@@ -1,5 +1,5 @@
 import requests
-from urllib.parse import urlparse
+
 
 # CSP Analyzer & Bypass Suggester
 def analyze_csp(url):
@@ -16,6 +16,8 @@ def analyze_csp(url):
         print("[+] Self only: Upload malicious JS to same domain")
     # Add more logic for nonce, hash, etc.
 
+
 if __name__ == "__main__":
     import sys
+
     analyze_csp(sys.argv[1])

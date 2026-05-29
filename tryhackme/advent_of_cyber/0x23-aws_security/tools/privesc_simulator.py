@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Simulate IAM privilege escalation paths
 
-import boto3
+
 
 def find_escalation_paths():
     print("[*] Simulating privilege escalation paths...")
@@ -9,5 +9,6 @@ def find_escalation_paths():
     print("2. EC2 instance role → S3 access → leaked keys")
     print("3. Lambda execution role → over-privileged")
     print("[+] Multiple escalation paths available")
+
 
 find_escalation_paths()

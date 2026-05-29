@@ -1,7 +1,6 @@
 import boto3
-import json
 
-lambda_client = boto3.client('lambda', endpoint_url='http://localhost:4566')
+lambda_client = boto3.client("lambda", endpoint_url="http://localhost:4566")
 
 function_code = """
 import json
@@ -17,12 +16,12 @@ def handler(event, context):
 """
 
 lambda_client.create_function(
-    FunctionName='toy-factory-processor',
-    Runtime='python3.11',
-    Role='arn:aws:iam::123456789012:role/vuln-role',
-    Handler='lambda_function.handler',
-    Code={'ZipFile': ''},  # LocalStack accepts empty for demo
-    Environment={'Variables': {'BACKDOOR_ENABLED': 'true'}}
+    FunctionName="toy-factory-processor",
+    Runtime="python3.11",
+    Role="arn:aws:iam::123456789012:role/vuln-role",
+    Handler="lambda_function.handler",
+    Code={"ZipFile": ""},  # LocalStack accepts empty for demo
+    Environment={"Variables": {"BACKDOOR_ENABLED": "true"}},
 )
 
 print("[+] Vulnerable Lambda backdoor deployed")
