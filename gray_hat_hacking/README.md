@@ -38,41 +38,43 @@ Authors are active trainers at Black Hat, DEF CON, RSA Conference, and many BSid
 
 ## 📂 What's Inside
 
-| Directory              | Description                                                                 |
-|------------------------|-----------------------------------------------------------------------------|
-| `/chapter-code/`       | PoC scripts & snippets organized by book chapter (Python, C, Bash, PowerShell, etc.) |
+| Directory              | Description           |
+| --------------------   | --------------------  |
+| `/chapter-code/`       | PoC scripts & snippets organized by book chapter (Python, C, Bash, PowerShell) |
 | `/labs/`               | Vagrant / Docker / VMware / VirtualBox lab build files (Kali, vulnerable VMs) |
 | `/tools/`              | Helper scripts, custom tools, updated wrappers for book tools              |
 | `/errata/`             | Community-reported errors, fixes, and platform updates                      |
 | `/cheatsheets/`        | Quick reference cards (nmap, Metasploit, Ghidra, gdb, etc.)                |
 | `/resources/`          | Recommended further reading, CTF write-ups, legal templates, updated links |
+|        |          |
 
-## 🚀 Quick Start – Building the Labs
+### 🚀 Quick Start – Building the Labs
 
 Most chapters assume you have a safe testing environment. Recommended setup:
 
 1. Install **VirtualBox** + **Vagrant** (or use Docker/Podman)
 2. Clone this repo:
-   ```
+
+   ```bash
    git clone https://github.com/your-username/cybersecurity_labs/gray-hat-hacking.git
    cd gray-hat-hacking
 
     ```
 
-## 🛠 Requirements
+### 🛠 Requirements
 
 - Kali Linux / Parrot OS / other pentest distro (2024+ rolling release recommended)
 - Python 3.9+, gcc, make, nasm, gdb, ghidra, radare2, cutter, etc.
 - VirtualBox / VMware / Docker
 - **(Optional)** Windows VMs for exploit development (Windows 10/11 debugging setup)
 
-## ⚠️ Responsible Use
+### ⚠️ Responsible Use
 
 - **Only** run exploits against lab machines you control.
 - Do **not** use this code in production environments without explicit written authorization.
 - Report newly discovered 0-days responsibly (follow coordinated vulnerability disclosure policies — see resources like CERT/CC or the project's own VDP if applicable).
 
-## 🙌 Contributing
+#### 🙌 Contributing
 
 We welcome contributions in the following areas:
 
@@ -83,20 +85,24 @@ We welcome contributions in the following areas:
 
 **Please open an issue first** to discuss major changes or new additions before submitting a pull request.
 
-## 📜 License
+#### 📜 License
 
 - **Code**: MIT License (see [LICENSE](LICENSE) file)
 - **Documentation & markdown files**: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 - **Book content**: Remains © McGraw Hill Education — this repository contains only companion materials, PoC code, labs, and community contributions.
 
-## 🔗 Official & Useful Links
+##### 🔗 Official & Useful Links
 
 - [Publisher page (McGraw Hill)](https://www.mheducation.com/highered/product/gray-hat-hacking-ethical-hacker-s-handbook-sixth-edition-harper/M9781264268948.html)
 - [Amazon (Sixth Edition)](https://www.amazon.com/Gray-Hat-Hacking-Ethical-Handbook/dp/1264268947)
 - [O'Reilly platform (eBook access)](https://www.oreilly.com/library/view/gray-hat-hacking/9781264268955/)
 
-**Passionately Written By: Ikwuka Okoye (IkwukaCySec)**
+- **Passionately Written By: Ikwuka Okoye (ikwukao)**
 
-**Happy (and ethical) hacking! 🛡️**
+- **Happy (and ethical) hacking! 🛡️**
 
-*Last updated: March 2026*
+- *Last updated: May 2026*
+
+###### To Be Continued
+
+---
